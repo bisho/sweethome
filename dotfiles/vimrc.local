@@ -1,0 +1,82 @@
+" vim: set foldmarker={,} foldlevel=0 foldmethod=marker spell:
+
+" Encoding {
+set encoding=utf-8
+" }
+
+" Personal Settings {
+" I hate fold by default
+set foldlevelstart=20
+" Disable ugly mouse support, I want console to be console
+set mouse-=a
+" Author for snippets
+let g:snips_author = 'Guillermo Pérez <bisho@tuenti.com>'
+" }
+
+" Colors {
+set t_Co=256
+colorscheme solarized
+" }
+
+" Spaces {
+" I love tweaking this a lot:
+" * I prefer tabs to spaces for indenting (noexpandtab)
+" * I display spaces used for indenting in dark BG (CustomSpaceForIndent)
+" * Use listchars for displaying:
+"	- Tabs as »
+"	- line wrap with «»
+"	- Trailing and nbsp spaces as ⬞
+" * After listchars tabs and trailing spaces are draw with
+"   style SpecialKey, (bright red by default). Since I prefer tabs
+"   I tweak that style to use dark gray FG instead
+" * Since now trailing spaces will be also dark, I make a custom
+"   match rule for those and assign it a TrailingSpaces highlight
+"   style (only if cursor not at the end to avoid flickering)
+"
+" Tabs / spaces
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+set noexpandtab
+
+" Display listchars but I want tabs in soft gray bg, so tweak SpecialKey
+highlight SpecialKey gui=None cterm=None ctermfg=243 guifg=#767676 ctermbg=None guibg=None 
+set listchars=tab:»\ ,trail:⬞,precedes:«,extends:»,nbsp:⬞
+
+" Display spaces with in dark bg
+highlight CustomSpaceForIndent ctermbg=238 guibg=#444444
+match CustomSpaceForIndent / \{2,}\| \ze\t/
+
+" Display trailing spaces in bright BG (if cursor is not on it)
+highlight CustomTrailingSpaces cterm=bold gui=bold ctermfg=16 guifg=#000000 ctermbg=54 guibg=#5f0087
+2match CustomTrailingSpaces /\s\+\%#\@<!$/
+" }
+
+" Macros {
+" With F3 enable/disable search highlight
+nnoremap <silent> <F3> :set hlsearch!<CR>
+" With F4 remove trailing whitespace from the file
+nnoremap <silent> <F4> :%s/\s\+$//g<CR><End>
+" With F10 toggle vim aids like line numbers, wrapping and listchars.
+" Disabling those leaves raw vim, and you will be able to copy with mouse
+" without issues and without the mouse=a mode that I hate
+nnoremap <silent> <F10> :set number!<CR>:set list!<CR>:set wrap!<CR><End>
+" <F12> toggle paste mode
+" }
+
+" CtrlP {
+let g:ctrlp_cmd = 'CtrlP ~/code/'
+let g:ctrlp_max_depth = 40
+let g:ctrlp_max_files = 30000
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '^\.|\.git$\|\.hg$\|\.svn$|build$',
+    \ 'file': '\.exe$\|\.so$\|\.dll$|\.o$|\.po$|\.pot$|^\.' }
+let g:ctrlp_cache_dir = '~/.cache/ctrlp'
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_use_caching = 1
+" }
+
+" Syntastic {
+let g:syntastic_phpcs_conf = "--standard=Symphony2"
+" }

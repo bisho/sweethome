@@ -1,0 +1,48 @@
+#!/bin/bash
+# Author: Guillermo Pérez <bisho@tuenti.com>a
+#
+# Quick & dirty script to raise UI notifications from command line
+#
+# Use in conjunction with the alias:
+#
+# alias alert='~/bin/notify alert "$?" "$(history 1)"'
+# alias critical='~/bin/notify critical "$?" "$(history 1)"'
+
+if [ $# -lt 3 ]; then
+	echo "Usage $0 <alert|critical> <exit_status> <cmd> [<text]"
+	exit 1;
+fi
+
+MODE=$1
+shift
+EXITCODE=$1;
+shift
+COMMAND=$(echo $1 | sed -e 's/^\s*[0-9]*\s//')
+shift
+MESSAGE=$*;
+
+echo "Command '$COMMAND' exited with '$?' status, MESSAGE '$MESSAGE'"
+
+if [ "$MODE " = "critical " ];
+then
+	URGENCY="critical"
+else
+	URGENCY="low"
+fi
+
+if [ -z "$MESSAGE" ];
+then
+	MESSAGE=$COMMAND
+fi
+
+if [ $EXITCODE = 0 ];
+then
+	ICON="terminal"
+	STATUS="SUCCES"
+	notify-send --urgency=low -i "terminal" "SUCCESS: $MESSAGE";
+else
+	ICON="error"
+	STATUS="ERROR"
+fi
+
+notify-send --urgency=$URGENCY -i $ICON "$STATUS: $MESSAGE";

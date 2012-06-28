@@ -1,0 +1,15 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# Load bash settings
+[ -f ~/conf/bash/config ] && . ~/conf/bash/config
+[ -f ~/conf/bash/aliases ] && . ~/conf/bash/aliases
+
+# Load private settings
+[ -f ~/.private/conf/bash/config ] && . ~/.private/conf/bash/config
+[ -f ~/.private/conf/bash/aliases ] && . ~/.private/conf/bash/aliases
+
+# Load host-specific settings (always private)
+[ -f ~/.private/conf/bash/$HOSTNAME ] && . ~/.private/conf/bash/$HOSTNAME
+

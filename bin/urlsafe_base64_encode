@@ -1,0 +1,16 @@
+#!/usr/bin/php
+<?php
+
+/**
+ * This converts STDIN into base64, but replacing the characters
+ * `+' and `/' that need to be encoded for placing them in urls
+ * into - and _. This is pretty common for encoding binary ids
+ * into ids to be printed in URLs.
+ */ 
+
+// We read in blocks of 48 bytes, that in base64 take 64 chars
+// to be able to generat base64 for big chunks of data nicely
+while ($data = fread(STDIN, 48)) {
+	echo strtr(base64_encode($data), '+/', '-_');
+	echo "\n";
+}

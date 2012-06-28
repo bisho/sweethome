@@ -1,0 +1,25 @@
+# Composite manager and background
+xcompmgr -f -c -D 2 &
+#unagi -c ~/conf/unagi.conf &
+(nitrogen --restore) &
+
+# Session
+gnome-settings-daemon &      # handles themes, starts gnome-screensaver. You may have to use gconf to disable it setting the background.
+nm-applet &                  # assuming you're using Network Manager
+#gnome-volume-manager &       # for mounting CDs, USB sticks, and such
+eval `gnome-keyring-daemon`  # SSH/GPG agent
+
+# Apps
+(sleep 15; empathy) &                     # if you're using pidgin. You can really put any programs here.
+(sleep 10; gnome-sound-applet) &
+(sleep 20; gnome-screensaver) &
+
+# This is needed for jvm nastiness
+wmname LG3D &
+
+# I love fast typematic behavior
+xset r rate 170 140 &
+
+# Awesome
+exec awesome --config ~/.config/awesome/rc.lua
+

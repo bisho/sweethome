@@ -1,0 +1,30 @@
+#!/usr/bin/php
+<?php
+
+/**
+ * This converts STDIN with special base64 (replacing the characters
+ * `+' and `/' that need to be encoded for placing them in urls
+ * into - and _) into the original data stream.
+ *
+ * This is pretty common for encoding binary ids into ids to be printed in URLs.
+ */
+
+$buffer = '';
+$padding = 0;
+while ($data = trim(fgets(STDIN))) {
+	$data = $buffer . strtr($data, '-_', '+/');
+	$padding = strlen($data) % 4;
+	if ($padding != 0) {
+		// Bytes non divisible by 4, might need padding
+		// or to be join with next line
+		$buffer = substr($data, -$padding);
+		$data = substr($data, 0, -$padding);
+	}
+	
+	echo base64_decode($data);
+}
+
+if ($buffer !== '') {
+	$data = $buffer . str_repeat('=', 4-$padding);
+	echo base64_decode($data);
+}

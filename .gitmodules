@@ -1,0 +1,9 @@
+[submodule "dotfiles/vim/spf13-vim"]
+	path = dotfiles/vim/spf13-vim
+	url = http://github.com/spf13/spf13-vim.git
+[submodule "dotfiles/vim/bundle/vundle"]
+	path = dotfiles/vim/bundle/vundle
+	url = http://github.com/gmarik/vundle.git
+[submodule "dotfiles/config.awesome/revelation"]
+	path = dotfiles/config.awesome/revelation
+	url = https://github.com/bioe007/awesome-revelation.git
